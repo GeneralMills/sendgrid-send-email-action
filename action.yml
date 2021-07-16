@@ -1,11 +1,28 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Twilio SendGrid Send Email'
+description: 'A GitHub action that helps to send email using Twilio SendGrid API'
+author: 'General Mills Inc'
 inputs:
-  milliseconds: # change this
+  emailToAddresses:
+    description: 'The receivers to whom email will be sent, seperated by the comma (,) character'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  emailFromAddress:
+    description: 'The email address that will be shown as sender'
+    required: true
+  emailSubject:
+    description: 'The subject of the email'
+    required: false
+    default: 'GitHub action notification'
+  emailBodyText:
+    description: 'The body of the mail as Plain Text'
+    required: true
+    default: ""
+  emailBodyHtml:
+    description: 'The body of the mail as HTML'
+    required: false
+    default: ""  
+  sendGridApiKey:
+    description: 'The SendGrid API Key for authentication'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
