@@ -1,0 +1,30 @@
+name: Build and Test
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+jobs:
+  build:
+    name: Build and Test
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v1
+      - name: Restore the dependencies
+        run: npm ci
+      - name: Build
+        run: npm run all
+      - name: Prepare Test data
+        run: echo 'This is testing github email action' > test-email.txt
+      - name: Run a test email job
+        id: test-email-job
+        uses: ./
+        with:
+          emailToAddresses: 'DLIST17606327@genmills.com'
+          emailFromAddress: 'noreply@github.com'
+          emailSubject: 'TESTING - GitHub Send Email Action'
+          emailBodyText: 'This is test email to check the working of GitHub Send Email Action'
+          sendGridApiKey: ${{ secrets.SENDGRID_API_KEY }}
+          attachmentsPath: ./test-email.txt
+          attachmentMimeType: plain/text

@@ -8,6 +8,7 @@ inputs:
   emailFromAddress:
     description: 'The email address that will be shown as sender'
     required: true
+    default: 'noreply@github.com'
   emailSubject:
     description: 'The subject of the email'
     required: false
