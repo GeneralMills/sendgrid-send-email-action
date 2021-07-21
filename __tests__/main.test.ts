@@ -1,5 +1,4 @@
-import {wait} from '../src/wait'
-import * as process from 'process'
+/* import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
 
@@ -26,3 +25,4 @@ test('test runs', () => {
   }
   console.log(cp.execFileSync(np, [ip], options).toString())
 })
+ */
