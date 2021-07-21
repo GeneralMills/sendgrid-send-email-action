@@ -22,7 +22,13 @@ inputs:
     default: ""  
   sendGridApiKey:
     description: 'The SendGrid API Key for authentication'
-    required: true
+    required: true  
+  attachmentsPath:
+    description: "Email single attachment path, with it's file name, already created on the runner host. For e.g. ./attachment.pdf. Ensure that the file encoding is UTF8. The total email message size should not exceed 20MB. This includes the message itself, headers, and the combined size of any attachments."
+    required: false
+  attachmentMimeType:
+    description: "Email single attachment HTTP MIME type. For e.g. application/pdf. Refer https://www.iana.org/assignments/media-types/media-types.xhtml#application for more details."
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
