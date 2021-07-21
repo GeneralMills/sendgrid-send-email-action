@@ -3,16 +3,14 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "build",
-			"problemMatcher": [
-				"$eslint-stylish"
-			],
+			"script": "all",
+			"problemMatcher": [],
+			"label": "npm: all",
+			"detail": "npm run build && npm run format && npm run lint && npm run package && npm test",
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"label": "npm: build",
-			"detail": "tsc"
+			}
 		},
 		{
 			"type": "npm",
@@ -24,6 +22,6 @@
 			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "jest"
-		}
+		},		
 	]
 }
