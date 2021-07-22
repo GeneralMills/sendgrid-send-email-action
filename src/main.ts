@@ -54,7 +54,7 @@ async function run(): Promise<void> {
     if (hasAttachments) {
       //currently we are supporting only single attachment      
       const attachmentFileName = file.parseFileName(attachmentsPath)
-      let attachmentContent = await file.getEncodedFileContents(attachmentsPath)
+      const attachmentContent = await file.getEncodedFileContents(attachmentsPath)
       
       core.debug(`Attachment Content - ${attachmentContent}`)
 
