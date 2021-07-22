@@ -14,8 +14,8 @@ async function run(): Promise<void> {
   const attachmentsPath = core.getInput('attachmentsPath')
   const attachmentMimeType = core.getInput('attachmentMimeType')
   const hasAttachments = attachmentsPath !== ''
-
-  core.debug('Getting Read to Send the Email')
+  
+  core.info('Preparing the email message')
 
   try {
     if (emailToAddresses.trim() === '') {
@@ -32,7 +32,7 @@ async function run(): Promise<void> {
       )
     } else if (
       hasAttachments &&
-      !(await file.checkFileExists(attachmentsPath))
+      !(file.checkFileExists(attachmentsPath))
     ) {
       throw new Error(`${attachmentsPath} does not exist`)
     }
@@ -53,7 +53,7 @@ async function run(): Promise<void> {
 
     if (hasAttachments) {
       //currently we are supporting only single attachment
-      const attachmentContent = await file.getFileContents(attachmentsPath)
+      const attachmentContent = file.getEncodedFileContents(attachmentsPath)
       const attachmentFileName = file.parseFileName(attachmentsPath)
 
       emailMessage.attachments = [
@@ -67,25 +67,24 @@ async function run(): Promise<void> {
       ]
     }
 
+    core.info('Email message ready to be sent to Twilio SendGrid API')
+
     sgMail.setApiKey(sendGridApiKey)
 
     await sgMail
       .sendMultiple(emailMessage as MailDataRequired)
       .then(() => {
-        console.log('Successfully emailed to the recipients')
+        core.info('Successfully sent email message to Twilio SendGrid API')
       })
       .catch(error => {
-        if (error.response) {
-          // Extract error msg
+        if (error.response) {        
           const {message, code, response} = error
 
           core.debug(`SendGrid Error Code - ${code}`)
           core.debug(`SendGrid Error Message - ${message}`)
-
-          // Extract response msg
+          
           const {body} = response
-
-          console.error(body)
+             
           core.setFailed(body)
         }
       })
