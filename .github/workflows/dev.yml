@@ -25,6 +25,7 @@ jobs:
           emailFromAddress: 'noreply@github.com'
           emailSubject: 'TESTING - GitHub Send Email Action'
           emailBodyText: 'This is test email to check the working of GitHub Send Email Action'
+          emailBodyHtml: '<p>This is test email to check the working of GitHub Send Email Action</p>'
           sendGridApiKey: ${{ secrets.SENDGRID_API_KEY }}
           attachmentsPath: ./test-email.txt
           attachmentMimeType: plain/text
