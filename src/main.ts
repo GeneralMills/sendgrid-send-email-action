@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import * as sendgrid from '@sendgrid/mail'
+import sgMail from '@sendgrid/mail'
 import {MailDataRequired} from '@sendgrid/helpers/classes/mail'
 import {EmailData} from '@sendgrid/helpers/classes/email-address'
 import * as file from './file'
@@ -67,9 +67,9 @@ async function run(): Promise<void> {
       ]
     }
 
-    sendgrid.setApiKey(sendGridApiKey)
+    sgMail.setApiKey(sendGridApiKey)
 
-    await sendgrid
+    await sgMail
       .sendMultiple(emailMessage as MailDataRequired)
       .then(() => {
         console.log('Successfully emailed to the recipients')
