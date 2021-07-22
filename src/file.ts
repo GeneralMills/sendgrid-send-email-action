@@ -10,6 +10,7 @@ export function getEncodedFileContents(filePath: string): string {
       throw new Error(`Error occurred while reading file - ${error}`)
     }
     if (data) {
+      core.debug(`File Content - ${data}`)
       result = data.toString('base64')
     }
   })

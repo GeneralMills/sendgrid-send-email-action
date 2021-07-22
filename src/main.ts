@@ -55,6 +55,8 @@ async function run(): Promise<void> {
       //currently we are supporting only single attachment
       const attachmentContent = file.getEncodedFileContents(attachmentsPath)
       const attachmentFileName = file.parseFileName(attachmentsPath)
+      
+      core.debug(`Attachment Content - ${attachmentContent}`)
 
       emailMessage.attachments = [
         {
