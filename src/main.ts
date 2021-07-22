@@ -5,7 +5,7 @@ import {EmailData} from '@sendgrid/helpers/classes/email-address'
 import * as file from './file'
 
 async function run(): Promise<void> {
-  const emailToAddresses = core.getInput('emailToAddress')
+  const emailToAddresses = core.getInput('emailToAddresses')
   const emailFromAddress = core.getInput('emailFromAddress')
   const emailSubject = core.getInput('emailSubject')
   const emailBodyText = core.getInput('emailBodyText')
