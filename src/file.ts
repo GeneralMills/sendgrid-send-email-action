@@ -1,31 +1,20 @@
 import * as core from '@actions/core'
-import * as fs from 'fs'
+import {promises as fs} from 'fs'
 import path from 'path'
 
-export function getEncodedFileContents(filePath: string): string {
-  let result = ''
-
-  fs.readFile(filePath, (error, data) => {
-    if (error) {
-      throw new Error(`Error occurred while reading file - ${error}`)
-    }
-    if (data) {
-      core.debug(`File Content - ${data}`)
-      result = data.toString('base64')
-    }
-  })
-
+export async function getEncodedFileContents(filePath: string): Promise<string> {
+  const data = await fs.readFile(filePath, 'utf8')
+  const result = (Buffer.from(data)).toString('base64')
+  core.debug(`${result} - file content`)
   return result
 }
 
-export function checkFileExists(filePath: string): Boolean {
+export async function checkFileExists(filePath: string): Promise<Boolean> {
   try {
-    fs.accessSync(filePath)
-
+    await fs.access(filePath)
     return true
   } catch (error) {
     core.debug(error)
-
     return false
   }
 }
