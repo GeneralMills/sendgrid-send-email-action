@@ -64,7 +64,7 @@ async function run(): Promise<void> {
           filename: attachmentFileName,
           type: attachmentMimeType,
           disposition: 'attachment',
-          contentId: attachmentFileName
+          contentId: "abc"
         }
       ]
     }
