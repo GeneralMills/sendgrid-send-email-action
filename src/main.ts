@@ -57,6 +57,8 @@ async function run(): Promise<void> {
       const attachmentContent = await file.getEncodedFileContents(attachmentsPath)
       
       core.debug(`Attachment Content - ${attachmentContent}`)
+      core.debug(`Attachment Filename - ${attachmentFileName}`)
+      core.debug(`Attachment MimeType - ${attachmentMimeType}`)
 
       emailMessage.attachments = [
         {
