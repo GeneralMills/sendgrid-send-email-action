@@ -79,8 +79,6 @@ After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/
 
 ## Example
 
-One of the example:-
-
 ```yaml
 uses: GeneralMills/artifactory-push-docker-image-action@v1.0.0
 with:
