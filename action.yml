@@ -19,8 +19,7 @@ inputs:
     default: ""
   emailBodyHtml:
     description: 'The body of the mail as HTML'
-    required: false
-    default: ""  
+    required: true
   sendGridApiKey:
     description: 'The SendGrid API Key for authentication'
     required: true  
