@@ -9,20 +9,20 @@ inputs:
     description: 'The email address that will be shown as sender'
     required: true
     default: 'noreply@github.com'
+  emailBodyHtml:
+    description: 'The body of the mail as HTML'
+    required: true
+  sendGridApiKey:
+    description: 'The SendGrid API Key for authentication'
+    required: true
   emailSubject:
     description: 'The subject of the email'
     required: false
     default: 'GitHub action notification'
   emailBodyText:
     description: 'The body of the mail as Plain Text'
-    required: true
+    required: false
     default: ""
-  emailBodyHtml:
-    description: 'The body of the mail as HTML'
-    required: true
-  sendGridApiKey:
-    description: 'The SendGrid API Key for authentication'
-    required: true  
   attachmentsPath:
     description: "Email single attachment path, with it's file name, already created on the runner host. For e.g. ./attachment.pdf. Ensure that the file encoding is UTF8. The total email message size should not exceed 20MB. This includes the message itself, headers, and the combined size of any attachments."
     required: false

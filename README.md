@@ -64,6 +64,19 @@ See the [actions tab](https://github.com/actions/typescript-action/actions) for 
 
 After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
 
+## Inputs
+
+| Parameter           | Required | Info                                                                          |
+| --------------------| -------- | ------------------------------------------------------------------------------|
+| `emailToAddresses`  | `true`   | The receivers to whom email will be sent, seperated by the comma (,) character|
+| `emailFromAddress`  | `true`   | The email address that will be shown as sender                                |
+| `emailBodyHtml`     | `true`   | The body of the mail as HTML                                                  |
+| `sendGridApiKey`    | `true`   | The SendGrid API Key for authentication                                       |
+| `emailSubject`      | `false`  | The subject of the email                                                      |
+| `emailBodyText`     | `false`  | The body of the mail as Plain Text                                            |
+| `attachmentsPath`   | `false`  | Email single attachment path, with it's file name, already created on the runner host. For e.g. ./attachment.pdf. Ensure that the file encoding is UTF8. The total email message size should not exceed 20MB. This includes the message itself, headers, and the combined size of any attachments.|
+| `attachmentMimeType`| `false`  | Email single attachment HTTP MIME type. For e.g. application/pdf. Refer https://www.iana.org/assignments/media-types/media-types.xhtml#application for more details.|
+
 ## Example
 
 One of the example:-
@@ -71,11 +84,11 @@ One of the example:-
 ```yaml
 uses: GeneralMills/artifactory-push-docker-image-action@v1.0.0
 with:
-  emailToAddresses: 'person1@abc.com, person2@abc.com'
-  emailFromAddress: 'noreply@github.com'
-  emailSubject: 'TESTING - GitHub Send Email Action'
-  emailBodyHtml: '<p>This is test email to check the working of GitHub Send Email Action</p>'
-  sendGridApiKey: ${{ secrets.SENDGRID_API_KEY }}
-  attachmentsPath: ./test-email.txt
-  attachmentMimeType: plain/text
+  emailToAddresses: 'person1@abc.com, person2@abc.com'
+  emailFromAddress: 'noreply@github.com'
+  emailSubject: 'TESTING - GitHub Send Email Action'
+  emailBodyHtml: '<p>This is test email to check the working of GitHub Send Email Action</p>'
+  sendGridApiKey: ${{ secrets.SENDGRID_API_KEY }}
+  attachmentsPath: ./test-email.txt
+  attachmentMimeType: plain/text
 ```
