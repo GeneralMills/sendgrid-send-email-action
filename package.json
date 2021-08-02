@@ -1,5 +1,5 @@
 {
-  "name": "sendgrid-send-email",
+  "name": "sendgrid-send-email-action",
   "version": "1.0.0",
   "private": true,
   "description": "A GitHub action that helps to send email using Twilio SendGrid API",
