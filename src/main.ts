@@ -55,8 +55,7 @@ async function run(): Promise<void> {
       //currently we are supporting only single attachment      
       const attachmentFileName = file.parseFileName(attachmentsPath)
       const attachmentContent = await file.getEncodedFileContents(attachmentsPath)
-      
-      core.debug(`Attachment Content - ${attachmentContent}`)
+            
       core.debug(`Attachment Filename - ${attachmentFileName}`)
       core.debug(`Attachment MimeType - ${attachmentMimeType}`)
 
