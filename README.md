@@ -80,7 +80,7 @@ After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/
 ## Example
 
 ```yaml
-uses: GeneralMills/artifactory-push-docker-image-action@v1.0.0
+uses: GeneralMills/sendgrid-send-email-action@v1.0.0
 with:
   emailToAddresses: 'person1@abc.com, person2@abc.com'
   emailFromAddress: 'noreply@github.com'
