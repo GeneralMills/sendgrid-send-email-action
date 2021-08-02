@@ -1,11 +1,34 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Twilio SendGrid Send Email'
+description: 'A GitHub action that helps to send email using Twilio SendGrid API'
+author: 'General Mills Inc'
 inputs:
-  milliseconds: # change this
+  emailToAddresses:
+    description: 'The receivers to whom email will be sent, seperated by the comma (,) character'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  emailFromAddress:
+    description: 'The email address that will be shown as sender'
+    required: true
+    default: 'noreply@github.com'
+  emailBodyHtml:
+    description: 'The body of the mail as HTML'
+    required: true
+  sendGridApiKey:
+    description: 'The SendGrid API Key for authentication'
+    required: true
+  emailSubject:
+    description: 'The subject of the email'
+    required: false
+    default: 'GitHub action notification'
+  emailBodyText:
+    description: 'The body of the mail as Plain Text'
+    required: false
+    default: ""
+  attachmentsPath:
+    description: "Email single attachment path, with it's file name, already created on the runner host. For e.g. ./attachment.pdf. Ensure that the file encoding is UTF8. The total email message size should not exceed 20MB. This includes the message itself, headers, and the combined size of any attachments."
+    required: false
+  attachmentMimeType:
+    description: "Email single attachment HTTP MIME type. For e.g. application/pdf. Refer https://www.iana.org/assignments/media-types/media-types.xhtml#application for more details."
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
