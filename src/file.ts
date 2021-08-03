@@ -2,9 +2,11 @@ import * as core from '@actions/core'
 import {promises as fs} from 'fs'
 import path from 'path'
 
-export async function getEncodedFileContents(filePath: string): Promise<string> {
+export async function getEncodedFileContents(
+  filePath: string
+): Promise<string> {
   const data = await fs.readFile(filePath, 'utf8')
-  const result = (Buffer.from(data)).toString('base64')
+  const result = Buffer.from(data).toString('base64')
   core.debug(`${result} - file content`)
   return result
 }

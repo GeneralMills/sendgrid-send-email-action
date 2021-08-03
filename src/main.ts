@@ -14,7 +14,7 @@ async function run(): Promise<void> {
   const attachmentsPath = core.getInput('attachmentsPath')
   const attachmentMimeType = core.getInput('attachmentMimeType')
   const hasAttachments = attachmentsPath !== ''
-  
+
   core.info('Preparing the email message')
 
   try {
@@ -30,10 +30,7 @@ async function run(): Promise<void> {
       throw new Error(
         'attachmentMimeType is required, if attachmentsPath is provided'
       )
-    } else if (
-      hasAttachments &&
-      !(file.checkFileExists(attachmentsPath))
-    ) {
+    } else if (hasAttachments && !file.checkFileExists(attachmentsPath)) {
       throw new Error(`${attachmentsPath} does not exist`)
     }
 
@@ -52,10 +49,12 @@ async function run(): Promise<void> {
     }
 
     if (hasAttachments) {
-      //currently we are supporting only single attachment      
+      //currently we are supporting only single attachment
       const attachmentFileName = file.parseFileName(attachmentsPath)
-      const attachmentContent = await file.getEncodedFileContents(attachmentsPath)
-            
+      const attachmentContent = await file.getEncodedFileContents(
+        attachmentsPath
+      )
+
       core.debug(`Attachment Filename - ${attachmentFileName}`)
       core.debug(`Attachment MimeType - ${attachmentMimeType}`)
 
@@ -65,7 +64,7 @@ async function run(): Promise<void> {
           filename: attachmentFileName,
           type: attachmentMimeType,
           disposition: 'attachment',
-          contentId: "abc"
+          contentId: 'abc'
         }
       ]
     }
@@ -80,14 +79,14 @@ async function run(): Promise<void> {
         core.info('Successfully sent email message to Twilio SendGrid API')
       })
       .catch(error => {
-        if (error.response) {        
+        if (error.response) {
           const {message, code, response} = error
 
           core.debug(`SendGrid Error Code - ${code}`)
           core.debug(`SendGrid Error Message - ${message}`)
-          
+
           const {body} = response
-             
+
           core.setFailed(body)
         }
       })
