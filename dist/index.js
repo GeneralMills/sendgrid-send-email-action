@@ -54,7 +54,7 @@ const path_1 = __importDefault(__webpack_require__(5622));
 function getEncodedFileContents(filePath) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = yield fs_1.promises.readFile(filePath, 'utf8');
-        const result = (Buffer.from(data)).toString('base64');
+        const result = Buffer.from(data).toString('base64');
         core.debug(`${result} - file content`);
         return result;
     });
@@ -143,8 +143,7 @@ function run() {
             if (hasAttachments && attachmentMimeType === '') {
                 throw new Error('attachmentMimeType is required, if attachmentsPath is provided');
             }
-            else if (hasAttachments &&
-                !(file.checkFileExists(attachmentsPath))) {
+            else if (hasAttachments && !file.checkFileExists(attachmentsPath)) {
                 throw new Error(`${attachmentsPath} does not exist`);
             }
             const parsedReceivers = emailToAddresses
@@ -158,7 +157,7 @@ function run() {
                 html: emailBodyHtml
             };
             if (hasAttachments) {
-                //currently we are supporting only single attachment      
+                //currently we are supporting only single attachment
                 const attachmentFileName = file.parseFileName(attachmentsPath);
                 const attachmentContent = yield file.getEncodedFileContents(attachmentsPath);
                 core.debug(`Attachment Filename - ${attachmentFileName}`);
@@ -169,7 +168,7 @@ function run() {
                         filename: attachmentFileName,
                         type: attachmentMimeType,
                         disposition: 'attachment',
-                        contentId: "abc"
+                        contentId: 'abc'
                     }
                 ];
             }
