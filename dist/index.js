@@ -120,6 +120,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const mail_1 = __importDefault(__webpack_require__(6686));
+const classes_1 = __webpack_require__(8480);
 const file = __importStar(__webpack_require__(4014));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -167,13 +168,17 @@ function run() {
                         content: attachmentContent,
                         filename: attachmentFileName,
                         type: attachmentMimeType,
-                        disposition: 'attachment',
-                        contentId: 'abc'
+                        disposition: 'attachment'
                     }
                 ];
             }
             core.info('Email message ready to be sent to Twilio SendGrid API');
             mail_1.default.setApiKey(sendGridApiKey);
+            if (core.isDebug()) {
+                const finalMail = classes_1.Mail.create(emailMessage);
+                const requestBody = finalMail.toJSON();
+                core.debug(`HTTP Request Body - ${JSON.stringify(requestBody)}`);
+            }
             yield mail_1.default
                 .sendMultiple(emailMessage)
                 .then(() => {

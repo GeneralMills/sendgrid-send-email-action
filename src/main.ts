@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import sgMail from '@sendgrid/mail'
 import {MailDataRequired} from '@sendgrid/helpers/classes/mail'
+import {Mail} from '@sendgrid/helpers/classes'
 import {EmailData} from '@sendgrid/helpers/classes/email-address'
 import * as file from './file'
 
@@ -39,7 +40,7 @@ async function run(): Promise<void> {
       .map(receiver =>
         receiver.replace('\n', '').replace('\r', '').replace('\t', '').trim()
       )
-    
+
     const emailMessage: MailDataRequired = {
       to: parsedReceivers,
       from: emailFromAddress,
@@ -47,12 +48,6 @@ async function run(): Promise<void> {
       text: emailBodyText,
       html: emailBodyHtml
     }
-    
-    core.debug(`emailBodyText - ${emailMessage.text}`)
-    core.debug(`emailBodyHtml - ${emailMessage.html}`)    
-    core.debug(`emailSubject - ${emailMessage.subject}`)
-    core.debug(`emailFromAddress - ${emailMessage.from}`)
-    core.debug(`emailToAddresses - ${emailMessage.to}`)
 
     if (hasAttachments) {
       //currently we are supporting only single attachment
@@ -60,7 +55,7 @@ async function run(): Promise<void> {
       const attachmentContent = await file.getEncodedFileContents(
         attachmentsPath
       )
-            
+
       core.debug(`Attachment Filename - ${attachmentFileName}`)
       core.debug(`Attachment MimeType - ${attachmentMimeType}`)
 
@@ -69,8 +64,7 @@ async function run(): Promise<void> {
           content: attachmentContent,
           filename: attachmentFileName,
           type: attachmentMimeType,
-          disposition: 'attachment',
-          contentId: 'abc'
+          disposition: 'attachment'
         }
       ]
     }
@@ -78,6 +72,12 @@ async function run(): Promise<void> {
     core.info('Email message ready to be sent to Twilio SendGrid API')
 
     sgMail.setApiKey(sendGridApiKey)
+
+    if (core.isDebug()) {
+      const finalMail = Mail.create(emailMessage)
+      const requestBody = finalMail.toJSON()
+      core.debug(`HTTP Request Body - ${JSON.stringify(requestBody)}`)
+    }
 
     await sgMail
       .sendMultiple(emailMessage)
