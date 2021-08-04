@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import sgMail from '@sendgrid/mail'
 import {MailDataRequired} from '@sendgrid/helpers/classes/mail'
+import {Mail} from '@sendgrid/helpers/classes'
 import {EmailData} from '@sendgrid/helpers/classes/email-address'
 import * as file from './file'
 
@@ -63,8 +64,7 @@ async function run(): Promise<void> {
           content: attachmentContent,
           filename: attachmentFileName,
           type: attachmentMimeType,
-          disposition: 'attachment',
-          contentId: 'abc'
+          disposition: 'attachment'
         }
       ]
     }
@@ -72,6 +72,12 @@ async function run(): Promise<void> {
     core.info('Email message ready to be sent to Twilio SendGrid API')
 
     sgMail.setApiKey(sendGridApiKey)
+
+    if (core.isDebug()) {
+      const finalMail = Mail.create(emailMessage)
+      const requestBody = finalMail.toJSON()
+      core.debug(`HTTP Request Body - ${JSON.stringify(requestBody)}`)
+    }
 
     await sgMail
       .sendMultiple(emailMessage)
