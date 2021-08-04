@@ -138,10 +138,10 @@ function run() {
             if (emailToAddresses.trim() === '') {
                 throw new Error('emailToAddresses is empty');
             }
-            if (emailBodyText === '' && emailBodyHtml === '') {
+            if (emailBodyText.trim() === '' && emailBodyHtml.trim() === '') {
                 throw new Error('Either text or HTML is required for email body');
             }
-            if (hasAttachments && attachmentMimeType === '') {
+            if (hasAttachments && attachmentMimeType.trim() === '') {
                 throw new Error('attachmentMimeType is required, if attachmentsPath is provided');
             }
             else if (hasAttachments && !file.checkFileExists(attachmentsPath)) {
@@ -154,7 +154,6 @@ function run() {
                 to: parsedReceivers,
                 from: emailFromAddress,
                 subject: emailSubject,
-                text: emailBodyText,
                 html: emailBodyHtml
             };
             if (hasAttachments) {
@@ -171,6 +170,9 @@ function run() {
                         disposition: 'attachment'
                     }
                 ];
+            }
+            if (emailBodyText.trim() !== '') {
+                emailMessage.text = emailBodyText;
             }
             core.info('Email message ready to be sent to Twilio SendGrid API');
             mail_1.default.setApiKey(sendGridApiKey);
