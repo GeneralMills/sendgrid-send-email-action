@@ -39,7 +39,7 @@ async function run(): Promise<void> {
       .map(receiver =>
         receiver.replace('\n', '').replace('\r', '').replace('\t', '').trim()
       )
-
+    
     const emailMessage: MailDataRequired = {
       to: parsedReceivers,
       from: emailFromAddress,
@@ -47,6 +47,12 @@ async function run(): Promise<void> {
       text: emailBodyText,
       html: emailBodyHtml
     }
+    
+    core.debug(`emailBodyText - ${emailMessage.text}`)
+    core.debug(`emailBodyHtml - ${emailMessage.html}`)    
+    core.debug(`emailSubject - ${emailMessage.subject}`)
+    core.debug(`emailFromAddress - ${emailMessage.from}`)
+    core.debug(`emailToAddresses - ${emailMessage.to}`)
 
     if (hasAttachments) {
       //currently we are supporting only single attachment
@@ -54,7 +60,7 @@ async function run(): Promise<void> {
       const attachmentContent = await file.getEncodedFileContents(
         attachmentsPath
       )
-
+            
       core.debug(`Attachment Filename - ${attachmentFileName}`)
       core.debug(`Attachment MimeType - ${attachmentMimeType}`)
 
