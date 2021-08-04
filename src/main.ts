@@ -23,11 +23,11 @@ async function run(): Promise<void> {
       throw new Error('emailToAddresses is empty')
     }
 
-    if (emailBodyText === '' && emailBodyHtml === '') {
+    if (emailBodyText.trim() === '' && emailBodyHtml.trim() === '') {
       throw new Error('Either text or HTML is required for email body')
     }
 
-    if (hasAttachments && attachmentMimeType === '') {
+    if (hasAttachments && attachmentMimeType.trim() === '') {
       throw new Error(
         'attachmentMimeType is required, if attachmentsPath is provided'
       )
@@ -45,7 +45,6 @@ async function run(): Promise<void> {
       to: parsedReceivers,
       from: emailFromAddress,
       subject: emailSubject,
-      text: emailBodyText,
       html: emailBodyHtml
     }
 
@@ -67,6 +66,10 @@ async function run(): Promise<void> {
           disposition: 'attachment'
         }
       ]
+    }
+
+    if (emailBodyText.trim() !== '') {
+      emailMessage.text = emailBodyText
     }
 
     core.info('Email message ready to be sent to Twilio SendGrid API')
